@@ -567,8 +567,8 @@ const JobAnalysis: React.FC<JobAnalysisProps> = ({ onAnalysisComplete, savedAnal
           <h3 className="text-yellow-400 font-medium text-sm">🔧 Dev Mode Info</h3>
         </div>
         <div className="text-yellow-300 text-xs space-y-1">
-          <p>• Текущий user_id: <span className="font-mono bg-yellow-500/20 px-2 py-1 rounded">{currentUserId}</span></p>
-          <p>• Эндпоинт: <span className="font-mono">https://77xihg.buildship.run/hhLinkToJson-e8acc54a9d17</span></p>
+          <p>• User ID: <span className="font-mono bg-yellow-500/20 px-2 py-1 rounded">{currentUserId}</span></p>
+          <p>• Эндпоинт: <span className="font-mono">https://77xihg.buildship.run2_vacancy_upload</span></p>
           <p>• Формат: JSON (vacancy_url: text, user_id: text)</p>
         </div>
       </div>
