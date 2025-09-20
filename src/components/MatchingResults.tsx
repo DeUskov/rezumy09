@@ -543,7 +543,7 @@ const MatchingResults: React.FC<MatchingResultsProps> = ({
     try {
       console.log('🚀 Начинаем новый скорринг через Gemini AI');
       
-      // Вызываем новую API функцию скорринга с user_id
+      // Вызов функции скорринга с новым API
       const scoringResult = await performScoringAnalysis(resumeData, jobData, currentUserId);
 
       console.log('✅ ПОЛУЧЕН РЕЗУЛЬТАТ НОВОГО СКОРРИНГА:', scoringResult);
@@ -622,7 +622,7 @@ const MatchingResults: React.FC<MatchingResultsProps> = ({
           </div>
           <div className="text-yellow-300 text-xs space-y-1">
             <p>• User ID: <span className="font-mono bg-yellow-500/20 px-2 py-1 rounded">{currentUserId}</span></p>
-            <p>• Эндпоинт: <span className="font-mono">https://77xihg.buildship.run4_scoring</span></p>
+            <p>• Эндпоинт: <span className="font-mono">https://77xihg.buildship.run/resume-vacancy-letter-copy-248ea5426c1b</span></p>
             <p>• Данные резюме: {resumeData ? '✅ Загружены' : '❌ Отсутствуют'}</p>
             <p>• Данные вакансии: {jobData ? '✅ Загружены' : '❌ Отсутствуют'}</p>
             <p>• Схема: Новая с детализированными метриками и рекомендациями</p>
