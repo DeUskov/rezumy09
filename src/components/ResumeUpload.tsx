@@ -347,8 +347,6 @@ const ResumeUpload: React.FC<ResumeUploadProps> = ({ onUploadComplete, savedFile
     setIsParsing(true);
 
     try {
-      const response = await fetch('https://77xihg.buildship.run1_resume_upload', {
-
       // Вызываем API параллельно с анимацией
       const parsedData = await parseResumeAPI(file, currentUserId);
       
