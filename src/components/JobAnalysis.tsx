@@ -297,11 +297,11 @@ const JobAnalysis: React.FC<JobAnalysisProps> = ({ onAnalysisComplete, savedAnal
       console.log('📤 Отправка вакансии на анализ:', {
         vacancy_url: url,
         user_id: userId,
-        endpoint: 'https://77xihg.buildship.run/hhLinkToJson-e8acc54a9d17'
+        endpoint: 'https://77xihg.buildship.run2_vacancy_upload'
       });
 
-      // Отправляем запрос на новый эндпоинт
-      const response = await fetch('https://77xihg.buildship.run/hhLinkToJson-e8acc54a9d17', {
+      // Отправляем запрос на эндпоинт загрузки вакансии
+      const response = await fetch('https://77xihg.buildship.run2_vacancy_upload', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
