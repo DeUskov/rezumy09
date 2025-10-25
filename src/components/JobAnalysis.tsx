@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link2, Search, CheckCircle, AlertCircle, ExternalLink, Loader2, MapPin, Building, Briefcase, Clock, Edit3, X } from 'lucide-react';
+import { Link2, Search, CheckCircle, AlertCircle, ExternalLink, Loader2, MapPin, Building, Briefcase, Clock, CreditCard as Edit3, X } from 'lucide-react';
 
 interface JobAnalysisProps {
   onAnalysisComplete: (analysisData: any) => void;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Upload, CheckCircle, AlertCircle, X, FileText, Loader2, Brain, Zap, Database, Clock, Edit3, AlertTriangle } from 'lucide-react';
+import { Upload, CheckCircle, AlertCircle, X, FileText, Loader2, Brain, Zap, Database, Clock, CreditCard as Edit3, AlertTriangle } from 'lucide-react';
 import { ResumeData, validateResumeData, getFullName, getTotalSkillsCount } from '../types/resumeData';
 
 interface ResumeUploadProps {
