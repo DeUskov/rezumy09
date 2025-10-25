@@ -411,17 +411,6 @@ const Auth: React.FC<AuthProps> = ({ onAuthSuccess }) => {
           </div>
         )}
 
-        {/* ОБНОВЛЕННАЯ отладочная информация (только в разработке) */}
-        {import.meta.env.DEV && (
-          <div className="bg-gray-500/10 border border-gray-500/20 rounded-xl p-3">
-            <p className="text-gray-400 text-xs">
-              🔧 Режим разработки<br />
-              Redirect URL: <span className="text-green-400">{getRedirectUrl()}</span><br />
-              Environment: <span className="text-blue-400">DEV={String(import.meta.env.DEV)}</span><br />
-              Hostname: <span className="text-yellow-400">{window.location.hostname}</span>
-            </p>
-          </div>
-        )}
       </motion.div>
 
       {/* НОВОЕ: Модальное окно для тестового входа */}

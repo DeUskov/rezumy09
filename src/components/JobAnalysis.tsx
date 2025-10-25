@@ -560,18 +560,20 @@ const JobAnalysis: React.FC<JobAnalysisProps> = ({ onAnalysisComplete, savedAnal
         </p>
       </div>
 
-      {/* 🔧 DEV INFO: Показываем текущий user_id и эндпоинт */}
-      <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-2xl p-4">
-        <div className="flex items-center space-x-2 mb-2">
-          <Clock className="w-4 h-4 text-yellow-400" />
-          <h3 className="text-yellow-400 font-medium text-sm">🔧 Dev Mode Info</h3>
+      {/* 🔧 DEV INFO: Показываем текущий user_id и эндпоинт только в режиме разработки */}
+      {import.meta.env.DEV && (
+        <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-2xl p-4">
+          <div className="flex items-center space-x-2 mb-2">
+            <Clock className="w-4 h-4 text-yellow-400" />
+            <h3 className="text-yellow-400 font-medium text-sm">🔧 Dev Mode Info</h3>
+          </div>
+          <div className="text-yellow-300 text-xs space-y-1">
+            <p>• User ID: <span className="font-mono bg-yellow-500/20 px-2 py-1 rounded">{currentUserId}</span></p>
+            <p>• Эндпоинт: <span className="font-mono">https://77xihg.buildship.run2_vacancy_upload</span></p>
+            <p>• Формат: JSON (vacancy_url: text, user_id: text)</p>
+          </div>
         </div>
-        <div className="text-yellow-300 text-xs space-y-1">
-          <p>• User ID: <span className="font-mono bg-yellow-500/20 px-2 py-1 rounded">{currentUserId}</span></p>
-          <p>• Эндпоинт: <span className="font-mono">https://77xihg.buildship.run2_vacancy_upload</span></p>
-          <p>• Формат: JSON (vacancy_url: text, user_id: text)</p>
-        </div>
-      </div>
+      )}
 
       {/* Поле ввода URL - показываем только если нет результата */}
       {!analysisResult && (

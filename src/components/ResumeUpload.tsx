@@ -735,20 +735,22 @@ const ResumeUpload: React.FC<ResumeUploadProps> = ({ onUploadComplete, savedFile
         </p>
       </div>
 
-      {/* 🔧 DEV INFO: Обновленная информация о Edge Function */}
-      <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-2xl p-4">
-        <div className="flex items-center space-x-2 mb-2">
-          <Clock className="w-4 h-4 text-yellow-400" />
-          <h3 className="text-yellow-400 font-medium text-sm">🔧 Direct Upload Info</h3>
+      {/* 🔧 DEV INFO: Показываем информацию о прямой загрузке только в режиме разработки */}
+      {import.meta.env.DEV && (
+        <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-2xl p-4">
+          <div className="flex items-center space-x-2 mb-2">
+            <Clock className="w-4 h-4 text-yellow-400" />
+            <h3 className="text-yellow-400 font-medium text-sm">🔧 Direct Upload Info</h3>
+          </div>
+          <div className="text-yellow-300 text-xs space-y-1">
+            <p>• User ID: <span className="font-mono bg-yellow-500/20 px-2 py-1 rounded">{currentUserId}</span></p>
+            <p>• Upload Method: <span className="font-mono">Direct FormData Upload</span></p>
+            <p>• Storage: <span className="font-mono">⚡ Минуя Supabase Storage</span></p>
+            <p>• Parse Endpoint: <span className="font-mono">file-upload/resume</span></p>
+            <p>• Parse Timeout: <span className="font-mono">120 секунд</span></p>
+          </div>
         </div>
-        <div className="text-yellow-300 text-xs space-y-1">
-          <p>• User ID: <span className="font-mono bg-yellow-500/20 px-2 py-1 rounded">{currentUserId}</span></p>
-          <p>• Upload Method: <span className="text-green-400 font-bold">Direct FormData Upload</span></p>
-          <p>• Storage: <span className="text-green-400">⚡ Минуя Supabase Storage</span></p>
-          <p>• Parse Endpoint: <span className="font-mono">file-upload/resume</span></p>
-          <p>• Parse Timeout: <span className="text-green-400 font-bold">120 секунд</span></p>
-        </div>
-      </div>
+      )}
 
       {/* Зона загрузки - показываем только если файл не загружен */}
       {!uploadedFile && !resumeData && (
