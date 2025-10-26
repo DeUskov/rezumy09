@@ -58,7 +58,7 @@ const parseResumeAPI = async (file: File, userId: string): Promise<any> => {
     fileSize: file.size,
     fileType: file.type,
     userId,
-    endpoint: 'https://77xihg.buildship.run/file-upload/resume',
+    endpoint: 'https://77xihg.buildship.run1_resume_upload',
     timeout: '120 секунд'
   });
 
@@ -83,7 +83,7 @@ const parseResumeAPI = async (file: File, userId: string): Promise<any> => {
     });
 
     // Отправляем POST запрос с FormData
-    const response = await fetch('https://77xihg.buildship.run/file-upload/resume', {
+    const response = await fetch('https://77xihg.buildship.run1_resume_upload', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
