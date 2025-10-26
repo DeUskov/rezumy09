@@ -277,7 +277,7 @@ const performScoringAnalysis = async (
   console.log('  ✓ user_id присутствует:', !!requestPayload.user_id);
 
   console.log('📤 Отправка запроса на новый API скорринга через Gemini AI:', {
-    endpoint: 'https://77xihg.buildship.run/resume-vacancy-letter-copy-248ea5426c1b',
+    endpoint: 'https://77xihg.buildship.run/fouth-scoring',
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -291,7 +291,7 @@ const performScoringAnalysis = async (
 
   try {
     // Отправка POST запроса к новому эндпоинту
-    const response = await fetch('https://77xihg.buildship.run/resume-vacancy-letter-copy-248ea5426c1b', {
+    const response = await fetch('https://77xihg.buildship.run/fouth-scoring', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -623,7 +623,7 @@ const MatchingResults: React.FC<MatchingResultsProps> = ({
             </div>
             <div className="text-yellow-300 text-xs space-y-1">
               <p>• User ID: <span className="font-mono bg-yellow-500/20 px-2 py-1 rounded">{currentUserId}</span></p>
-              <p>• Эндпоинт: <span className="font-mono">https://77xihg.buildship.run4_scoring</span></p>
+              <p>• Эндпоинт: <span className="font-mono">https://77xihg.buildship.run/fouth-scoring</span></p>
               <p>• Данные резюме: {resumeData ? '✅ Загружены' : '❌ Отсутствуют'}</p>
               <p>• Данные вакансии: {jobData ? '✅ Загружены' : '❌ Отсутствуют'}</p>
               <p>• Схема: Новая с детализированными метриками и рекомендациями</p>
