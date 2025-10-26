@@ -109,7 +109,7 @@ const CoverLetterGenerator: React.FC<CoverLetterGeneratorProps> = ({
 
       console.log('📤 Генерация письма с настройками:', requestPayload);
 
-      const response = await fetch('https://77xihg.buildship.run3_cv_generation', {
+      const response = await fetch('https://77xihg.buildship.run/third-cv-generation', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
