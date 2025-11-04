@@ -25,7 +25,7 @@
     - Составной индекс для быстрой проверки пары username/key_for_test
 */
 
--- Создание таблицы test_users
+-- Создание таблицы test_users если её ещё нет
 CREATE TABLE IF NOT EXISTS test_users (
   id bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
   username text UNIQUE NOT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS test_users (
 ALTER TABLE test_users ENABLE ROW LEVEL SECURITY;
 
 -- Политика безопасности: публичный доступ только на чтение
--- Это необходимо для проверки учетных данных в Edge Function
+DROP POLICY IF EXISTS "Public read access for test users" ON test_users;
 CREATE POLICY "Public read access for test users"
   ON test_users
   FOR SELECT
@@ -53,22 +53,13 @@ CREATE UNIQUE INDEX IF NOT EXISTS idx_test_users_username
 CREATE UNIQUE INDEX IF NOT EXISTS idx_test_users_email 
   ON test_users (email);
 
--- Составной индекс для быстрой проверки пары username + key_for_test
 CREATE INDEX IF NOT EXISTS idx_test_users_auth_pair 
   ON test_users (username, key_for_test);
 
--- Вставка тестовых данных
+-- Вставка тестовых данных если они ещё не добавлены
 INSERT INTO test_users (username, key_for_test, display_name, email) VALUES
   ('tester1', 'test123', 'Тестовый Пользователь 1', 'tester1@test.jobmatch.ai'),
   ('tester2', 'demo456', 'Тестовый Пользователь 2', 'tester2@test.jobmatch.ai'),
   ('admin', 'admin789', 'Администратор Тест', 'admin@test.jobmatch.ai'),
   ('demo', 'demo2024', 'Демо Пользователь', 'demo@test.jobmatch.ai')
 ON CONFLICT (username) DO NOTHING;
-
--- Комментарии к таблице и столбцам для документации
-COMMENT ON TABLE test_users IS 'Таблица тестовых пользователей для аутентификации в режиме разработки';
-COMMENT ON COLUMN test_users.username IS 'Уникальное имя пользователя для входа';
-COMMENT ON COLUMN test_users.key_for_test IS 'Ключ для аутентификации (аналог пароля)';
-COMMENT ON COLUMN test_users.display_name IS 'Отображаемое имя пользователя в интерфейсе';
-COMMENT ON COLUMN test_users.email IS 'Email для создания пользователя в Supabase Auth';
-COMMENT ON COLUMN test_users.created_at IS 'Дата и время создания записи';

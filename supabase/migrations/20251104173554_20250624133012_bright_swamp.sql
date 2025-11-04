@@ -17,13 +17,14 @@ INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_typ
 VALUES (
   'resumes',
   'resumes',
-  false, -- приватный bucket
-  10485760, -- 10MB в байтах
+  false,
+  10485760,
   ARRAY['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document']
 )
 ON CONFLICT (id) DO NOTHING;
 
 -- Политика для загрузки файлов (только аутентифицированные пользователи могут загружать в свою папку)
+DROP POLICY IF EXISTS "Users can upload their own resumes" ON storage.objects;
 CREATE POLICY "Users can upload their own resumes"
 ON storage.objects
 FOR INSERT
@@ -34,6 +35,7 @@ WITH CHECK (
 );
 
 -- Политика для чтения файлов (только свои файлы)
+DROP POLICY IF EXISTS "Users can read their own resumes" ON storage.objects;
 CREATE POLICY "Users can read their own resumes"
 ON storage.objects
 FOR SELECT
@@ -44,6 +46,7 @@ USING (
 );
 
 -- Политика для обновления файлов (только свои файлы)
+DROP POLICY IF EXISTS "Users can update their own resumes" ON storage.objects;
 CREATE POLICY "Users can update their own resumes"
 ON storage.objects
 FOR UPDATE
@@ -58,6 +61,7 @@ WITH CHECK (
 );
 
 -- Политика для удаления файлов (только свои файлы)
+DROP POLICY IF EXISTS "Users can delete their own resumes" ON storage.objects;
 CREATE POLICY "Users can delete their own resumes"
 ON storage.objects
 FOR DELETE

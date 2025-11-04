@@ -15,9 +15,17 @@
     - Добавляем триггер для новых пользователей
 */
 
--- Добавляем колонку telegram_user_id в таблицу profiles
-ALTER TABLE public.profiles 
-ADD COLUMN IF NOT EXISTS telegram_user_id BIGINT UNIQUE;
+-- Добавляем колонку telegram_user_id в таблицу profiles если её ещё нет
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM information_schema.columns
+    WHERE table_name = 'profiles' AND column_name = 'telegram_user_id'
+  ) THEN
+    ALTER TABLE public.profiles 
+    ADD COLUMN telegram_user_id BIGINT UNIQUE;
+  END IF;
+END $$;
 
 -- Создаем индекс для быстрого поиска по telegram_user_id
 CREATE INDEX IF NOT EXISTS idx_profiles_telegram_user_id 
@@ -25,31 +33,6 @@ ON public.profiles(telegram_user_id);
 
 -- Включаем RLS для таблицы profiles (если еще не включен)
 ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
-
--- Политика для чтения профилей (пользователи могут читать свой профиль)
-DROP POLICY IF EXISTS "Users can read own profile" ON public.profiles;
-CREATE POLICY "Users can read own profile"
-ON public.profiles
-FOR SELECT
-TO authenticated
-USING (auth.uid() = user_id);
-
--- Политика для создания профилей (пользователи могут создать свой профиль)
-DROP POLICY IF EXISTS "Users can create own profile" ON public.profiles;
-CREATE POLICY "Users can create own profile"
-ON public.profiles
-FOR INSERT
-TO authenticated
-WITH CHECK (auth.uid() = user_id);
-
--- Политика для обновления профилей (пользователи могут обновлять свой профиль)
-DROP POLICY IF EXISTS "Users can update own profile" ON public.profiles;
-CREATE POLICY "Users can update own profile"
-ON public.profiles
-FOR UPDATE
-TO authenticated
-USING (auth.uid() = user_id)
-WITH CHECK (auth.uid() = user_id);
 
 -- Функция для автоматического создания профиля при регистрации пользователя
 CREATE OR REPLACE FUNCTION public.handle_new_user()

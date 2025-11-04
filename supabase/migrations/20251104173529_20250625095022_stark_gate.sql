@@ -11,7 +11,6 @@
 */
 
 -- Обновляем функцию для автоматического создания профиля при регистрации пользователя
--- НОВОЕ: Теперь сохраняет имя пользователя из метаданных Magic Link
 CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS TRIGGER AS $$
 BEGIN

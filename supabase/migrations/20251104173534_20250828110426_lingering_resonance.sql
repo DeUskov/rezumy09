@@ -28,7 +28,7 @@
     - Индекс по overall_score для фильтрации по качеству
 */
 
--- Создание таблицы generations
+-- Создание таблицы generations если её ещё нет
 CREATE TABLE IF NOT EXISTS generations (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id uuid NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
@@ -56,35 +56,6 @@ CREATE TABLE IF NOT EXISTS generations (
 -- Включение Row Level Security
 ALTER TABLE generations ENABLE ROW LEVEL SECURITY;
 
--- Политика для чтения: пользователи могут читать только свои генерации
-CREATE POLICY "Users can read own generations"
-  ON generations
-  FOR SELECT
-  TO authenticated
-  USING (auth.uid() = user_id);
-
--- Политика для создания: пользователи могут создавать генерации только для себя
-CREATE POLICY "Users can create own generations"
-  ON generations
-  FOR INSERT
-  TO authenticated
-  WITH CHECK (auth.uid() = user_id);
-
--- Политика для обновления: пользователи могут обновлять только свои генерации
-CREATE POLICY "Users can update own generations"
-  ON generations
-  FOR UPDATE
-  TO authenticated
-  USING (auth.uid() = user_id)
-  WITH CHECK (auth.uid() = user_id);
-
--- Политика для удаления: пользователи могут удалять только свои генерации
-CREATE POLICY "Users can delete own generations"
-  ON generations
-  FOR DELETE
-  TO authenticated
-  USING (auth.uid() = user_id);
-
 -- Создание индексов для оптимизации запросов
 CREATE INDEX IF NOT EXISTS idx_generations_user_id 
   ON generations(user_id);
@@ -99,7 +70,6 @@ CREATE INDEX IF NOT EXISTS idx_generations_overall_score
 CREATE INDEX IF NOT EXISTS idx_generations_status 
   ON generations(status);
 
--- Создание составного индекса для быстрого поиска генераций пользователя по дате
 CREATE INDEX IF NOT EXISTS idx_generations_user_created 
   ON generations(user_id, created_at DESC);
 
@@ -113,21 +83,8 @@ END;
 $$ language 'plpgsql';
 
 -- Триггер для автоматического обновления updated_at при изменении записи
+DROP TRIGGER IF EXISTS update_generations_updated_at ON generations;
 CREATE TRIGGER update_generations_updated_at
   BEFORE UPDATE ON generations
   FOR EACH ROW
   EXECUTE FUNCTION update_updated_at_column();
-
--- Комментарии к таблице и столбцам для документации
-COMMENT ON TABLE generations IS 'Хранение всех генераций сопроводительных писем и результатов скорринга пользователей';
-COMMENT ON COLUMN generations.id IS 'Уникальный идентификатор генерации';
-COMMENT ON COLUMN generations.user_id IS 'ID пользователя из auth.users';
-COMMENT ON COLUMN generations.job_title IS 'Название должности из анализируемой вакансии';
-COMMENT ON COLUMN generations.company_name IS 'Название компании из анализируемой вакансии';
-COMMENT ON COLUMN generations.overall_score IS 'Общий балл скорринга от 0 до 100';
-COMMENT ON COLUMN generations.cover_letter_text IS 'Полный текст сгенерированного сопроводительного письма';
-COMMENT ON COLUMN generations.scoring_results_json IS 'Полные результаты скорринга в формате JSON';
-COMMENT ON COLUMN generations.resume_data_json IS 'Структурированные данные резюме в формате JSON';
-COMMENT ON COLUMN generations.job_data_json IS 'Структурированные данные вакансии в формате JSON';
-COMMENT ON COLUMN generations.title IS 'Пользовательское название для генерации (опционально)';
-COMMENT ON COLUMN generations.status IS 'Статус генерации: completed, draft, archived';
