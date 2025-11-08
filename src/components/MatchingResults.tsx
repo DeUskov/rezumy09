@@ -688,7 +688,7 @@ const MatchingResults: React.FC<MatchingResultsProps> = ({
       <div className="text-center">
         <h2 className="text-2xl font-bold text-white mb-2">Скорринг соответствия</h2>
         <p className="text-gray-300">
-          Детализированный анализ через новый Gemini AI v2.0
+          Детализированный анализ с Gemini AI
         </p>
       </div>
 
