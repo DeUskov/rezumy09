@@ -1068,11 +1068,7 @@ const MatchingResults: React.FC<MatchingResultsProps> = ({
                 cursor: 'pointer',
                 minWidth: '200px'
               }}
-            >
-              Далее →
-            </button>
-          </div>
-        </div>
+           
       )}
     </div>
   );
