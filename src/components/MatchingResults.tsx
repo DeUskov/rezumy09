@@ -664,7 +664,7 @@ const MatchingResults: React.FC<MatchingResultsProps> = ({
           className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold py-4 px-6 rounded-2xl shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:from-blue-500 hover:to-purple-500 flex items-center justify-center space-x-2"
         >
           <BarChart3 className="w-5 h-5" />
-          <span>Запустить новый анализ через Gemini AI v2.0</span>
+          <span>Запустить анализ через Gemini AI</span>
         </motion.button>
 
         {/* ОБНОВЛЕННАЯ информация о том, что будет проанализировано */}
