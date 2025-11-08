@@ -845,17 +845,51 @@ const MatchingResults: React.FC<MatchingResultsProps> = ({
       {scoringData && analysisComplete && (
         <div className="space-y-6" id="scoring-results-container">
           {/* 1. Общая оценка - упрощенная версия */}
-          <div className="text-center p-6" style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '24px' }}>
-            <div className="mb-4">
-              <h2 className="text-white text-2xl font-bold mb-2">
-                🎯 Общий балл соответствия: {scoringData.scoring_result.total_score}%
-              </h2>
-              <p className="text-gray-300">
-                {getRecommendationText(scoringData.scoring_result.recommendation)}
-              </p>
-              <p className="text-gray-400 text-sm mt-2">
-                🤖 Анализ выполнен новым Gemini AI v2.0
-              </p>
+          <div className="p-6" style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '24px' }}>
+            <div className="flex items-start justify-between gap-6">
+              <div className="flex-1 text-center">
+                <h2 className="text-white text-2xl font-bold mb-2">
+                  🎯 Общий балл соответствия: {scoringData.scoring_result.total_score}%
+                </h2>
+                <p className="text-gray-300">
+                  {getRecommendationText(scoringData.scoring_result.recommendation)}
+                </p>
+                <p className="text-gray-400 text-sm mt-2">
+                  🤖 Анализ выполнен новым Gemini AI v2.0
+                </p>
+              </div>
+              <button
+                onClick={() => {
+                  console.log('🔄 СБРОС НОВОГО АНАЛИЗА: Начинаем полный сброс состояний');
+
+                  setAnalysisComplete(false);
+                  setScoringData(null);
+                  setError(null);
+                  setIsAnalyzing(false);
+
+                  setCurrentMessageIndex(0);
+                  setVisibleMessages([]);
+
+                  console.log('📊 Состояния сброшены для нового анализа');
+
+                  const newUserId = generateDevUserId();
+                  setCurrentUserId(newUserId);
+                  console.log('🔧 Сгенерирован новый user_id для повторного скорринга:', newUserId);
+
+                  onScoringComplete(null);
+
+                  console.log('✅ Полный сброс завершен, компонент готов к новому анализу');
+                }}
+                className="flex-shrink-0 px-6 py-3 rounded-2xl transition-colors whitespace-nowrap"
+                style={{
+                  backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                  color: '#d1d5db',
+                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  cursor: 'pointer'
+                }}
+              >
+                🔄 Повторить анализ
+              </button>
             </div>
           </div>
 
@@ -1022,58 +1056,20 @@ const MatchingResults: React.FC<MatchingResultsProps> = ({
             </p>
           </div>
 
-          {/* 5. Кнопки действий */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', alignItems: 'center' }}>
+          {/* 5. Кнопка "Далее" для перехода на следующий шаг */}
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
             <button
               onClick={goToNextStep}
-              className="w-full py-4 px-6 font-semibold rounded-2xl transition-all duration-300 text-center"
-              style={{ 
-                background: 'linear-gradient(to right, #059669, #047857)', 
+              className="py-4 px-8 font-semibold rounded-2xl transition-all duration-300 text-center"
+              style={{
+                background: 'linear-gradient(to right, #059669, #047857)',
                 color: '#ffffff',
                 border: 'none',
                 cursor: 'pointer',
-                maxWidth: '400px'
+                minWidth: '200px'
               }}
             >
-              ✅ Далее →
-            </button>
-            
-            <button
-              onClick={() => {
-                console.log('🔄 СБРОС НОВОГО АНАЛИЗА: Начинаем полный сброс состояний');
-                
-                // ИСПРАВЛЕНО: Полный сброс всех состояний
-                setAnalysisComplete(false);
-                setScoringData(null);
-                setError(null);
-                setIsAnalyzing(false);
-                
-                // ИСПРАВЛЕНО: Сбрасываем анимированные сообщения
-                setCurrentMessageIndex(0);
-                setVisibleMessages([]);
-                
-                console.log('📊 Состояния сброшены для нового анализа');
-                
-                // Генерируем новый user_id для повторного анализа
-                const newUserId = generateDevUserId();
-                setCurrentUserId(newUserId);
-                console.log('🔧 Сгенерирован новый user_id для повторного скорринга:', newUserId);
-                
-                // НОВОЕ: Уведомляем родительский компонент о сбросе данных
-                // Это очистит сохраненные результаты в Dashboard
-                onScoringComplete(null);
-                
-                console.log('✅ Полный сброс завершен, компонент готов к новому анализу');
-              }}
-              className="px-6 py-3 rounded-2xl transition-colors text-center"
-              style={{
-                backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                color: '#d1d5db',
-                border: '1px solid rgba(255, 255, 255, 0.2)',
-                cursor: 'pointer'
-              }}
-            >
-              🔄 Повторить анализ
+              Далее →
             </button>
           </div>
         </div>
