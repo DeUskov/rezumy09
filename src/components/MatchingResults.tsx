@@ -855,7 +855,7 @@ const MatchingResults: React.FC<MatchingResultsProps> = ({
                   {getRecommendationText(scoringData.scoring_result.recommendation)}
                 </p>
                 <p className="text-gray-400 text-sm mt-2">
-                  🤖 Анализ выполнен новым Gemini AI v2.0
+                  🤖 Анализ выполнен Gemini AI
                 </p>
               </div>
               <button
